@@ -1,0 +1,37 @@
+{
+    "id": "/",
+    "name": "Zein's Pool & Turf",
+    "short_name": "Zein's Pool",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#06172B",
+    "theme_color": "#06172B",
+    "description": "Zein's Pool & Turf — Reserve football turf, pool sessions, and VIP facility passes online.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/zainpool.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/zainpool.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/zainpool.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/zainpool.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Zein's Pool &amp; Turf — Book football turf, pool sessions, and VIP passes online.">
+  <meta name="theme-color" content="#06172B">
+
+  <!-- iOS & Mobile PWA meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Zein's Pool">
+  <link rel="apple-touch-icon" href="icons/zainpool.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icons/zainpool.png"/>
+
+  <title>Zein's Pool &amp; Turf</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #06172B;
+      color: #F5F8FC;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overscroll-behavior: none;
+    }
+
+    #startup {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: radial-gradient(circle at 50% 30%, #073B63 0%, #06172B 70%);
+      z-index: 9999;
+      transition: opacity 180ms ease;
+    }
+
+    #startup.startup--hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .startup__card {
+      width: min(360px, 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(34, 211, 238, 0.22);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .startup__logo {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      object-fit: contain;
+      background: #06172B;
+      padding: 8px;
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .startup__tag {
+      margin: 14px 0 0;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #22D3EE;
+    }
+
+    .startup__title {
+      margin: 6px 0 0;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #FFFFFF;
+    }
+
+    .startup__subtitle {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #94A3B8;
+    }
+
+    .startup__spinner {
+      margin: 18px auto 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 3px solid rgba(255, 255, 255, 0.14);
+      border-top-color: #22D3EE;
+      animation: spin 900ms linear infinite;
+    }
+
+    /* Install / Download Mobile App Floating Banner */
+    #pwa-install-banner {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(616px, calc(100% - 24px));
+      background: #06172B;
+      border: 1px solid rgba(34, 211, 238, 0.45);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 9000;
+      box-shadow: 0 14px 34px rgba(6, 23, 43, 0.42);
+      box-sizing: border-box;
+    }
+
+    #pwa-install-banner.visible {
+      display: flex;
+    }
+
+    .pwa-banner__left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .pwa-banner__icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #073B63;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+
+    .pwa-banner__text {
+      min-width: 0;
+    }
+
+    .pwa-banner__title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pwa-banner__desc {
+      font-size: 11px;
+      color: #94A3B8;
+      margin: 2px 0 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pwa-banner__actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .pwa-banner__btn {
+      appearance: none;
+      border: none;
+      background: #22D3EE;
+      color: #06172B;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 7px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .pwa-banner__btn--apk {
+      background: rgba(255, 255, 255, 0.12);
+      color: #F5F8FC;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .pwa-banner__close {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: #94A3B8;
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px 6px;
+      cursor: pointer;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="startup" role="status" aria-live="polite">
+    <div class="startup__card">
+      <img class="startup__logo" src="icons/zainpool.png" alt="Zein's Pool logo" />
+      <p class="startup__tag">THE GAME STARTS HERE</p>
+      <p class="startup__title">Zein's Pool &amp; Turf</p>
+      <p class="startup__subtitle">Loading booking experience…</p>
+      <div class="startup__spinner" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div id="pwa-install-banner" role="region" aria-label="Install Mobile App">
+    <div class="pwa-banner__left">
+      <img class="pwa-banner__icon" src="icons/zainpool.png" alt="Zein's Pool" />
+      <div class="pwa-banner__text">
+        <p class="pwa-banner__title">Get Zein's Pool Mobile App</p>
+        <p class="pwa-banner__desc" id="pwa-banner-desc">Install directly to your phone or download APK</p>
+      </div>
+    </div>
+    <div class="pwa-banner__actions">
+      <button type="button" id="pwa-install-btn" class="pwa-banner__btn" style="display:none;">Install App</button>
+      <a href="Zeins-Pool-Turf-Booking-App.apk" download="Zeins-Pool-Turf-Booking-App.apk" id="pwa-apk-btn" class="pwa-banner__btn pwa-banner__btn--apk">Download APK</a>
+      <button type="button" id="pwa-close-btn" class="pwa-banner__close" aria-label="Dismiss">&times;</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+      if (isStandalone) return;
+
+      const banner = document.getElementById('pwa-install-banner');
+      const installBtn = document.getElementById('pwa-install-btn');
+      const closeBtn = document.getElementById('pwa-close-btn');
+      const descEl = document.getElementById('pwa-banner-desc');
+      let deferredPrompt = null;
+
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBtn) installBtn.style.display = 'inline-block';
+        if (banner && !sessionStorage.getItem('zeins_pwa_dismissed')) {
+          banner.classList.add('visible');
+        }
+      });
+
+      const ua = window.navigator.userAgent || '';
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isAndroid = /Android/i.test(ua);
+
+      window.addEventListener('load', function () {
+        if (sessionStorage.getItem('zeins_pwa_dismissed')) return;
+        if (isIOS) {
+          if (descEl) descEl.textContent = 'Tap Share → "Add to Home Screen" to install app';
+          const apkBtn = document.getElementById('pwa-apk-btn');
+          if (apkBtn) apkBtn.style.display = 'none';
+          if (banner) banner.classList.add('visible');
+        } else if (isAndroid || window.innerWidth >= 680) {
+          window.setTimeout(function () {
+            if (!isStandalone && banner && !sessionStorage.getItem('zeins_pwa_dismissed')) {
+              banner.classList.add('visible');
+            }
+          }, 2500);
+        }
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async function () {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          const choice = await deferredPrompt.userChoice;
+          if (choice && choice.outcome === 'accepted') {
+            banner.classList.remove('visible');
+          }
+          deferredPrompt = null;
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+          sessionStorage.setItem('zeins_pwa_dismissed', '1');
+          banner.classList.remove('visible');
+        });
+      }
+
+      window.addEventListener('appinstalled', function () {
+        if (banner) banner.classList.remove('visible');
+      });
+    })();
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
